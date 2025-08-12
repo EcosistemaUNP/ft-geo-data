@@ -6,6 +6,8 @@ import { PreubaStackedAreaChart, Example, PanelTitulo, FiltroTitulo, FiltroDisca
 import { FiltroUbicacion, FiltroFechas, FiltroGenero, FiltroRangoEtario, FiltroGrupoEtnico } from "../components";
 
 import '../styles/visorStyles.css';
+import { TipoSolicitudPieChart } from "../components/recharts/visor/pie-charts/TipoSolicitudPieChart";
+import { GeneroBarChart } from "../components/recharts/visor/bar-charts/GeneroBarChart";
 
 const DataVisor: React.FC = () => {
 
@@ -151,8 +153,9 @@ const DataVisor: React.FC = () => {
                             </div>
                         </div>
                         <div className="panel-row">
-                            <div className="panel-row-item" style={{ minWidth: '44%', minHeight: '400px' }}>
-                                <PreubaStackedAreaChart />
+                            <div className="panel-row-item" style={{ minWidth: '33%', minHeight: '400px' }}>
+                                <TipoSolicitudPieChart />
+                                {/* <PreubaStackedAreaChart /> */}
                             </div>
                             <div className="panel-row-item" style={{ minWidth: '54%', minHeight: '400px' }}>
                                 <Example fechaInicio={fechaInicio} fechaFin={fechaFin} />
@@ -160,7 +163,8 @@ const DataVisor: React.FC = () => {
                         </div>
                         <div className="panel-row" style={{ marginBottom: '5px' }}>
                             <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '370px' }}>
-                                <Example fechaInicio={fechaInicio} fechaFin={fechaFin} />
+                                <GeneroBarChart fechaInicio={fechaInicio} fechaFin={fechaFin} />
+                                {/* <Example fechaInicio={fechaInicio} fechaFin={fechaFin} /> */}
                             </div>
                             <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '370px' }}>
                                 <PreubaStackedAreaChart />
