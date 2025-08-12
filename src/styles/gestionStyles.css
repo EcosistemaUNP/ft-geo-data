@@ -1,0 +1,153 @@
+.row-zonas-registro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    gap: 10px;
+}
+
+/* Mapa: columna izquierda */
+
+.leaflet-control-attribution a,
+.leaflet-control-attribution span {
+    display: none;
+}
+
+.leaflet-control-layers-scrollbar {
+    overflow-y: hidden !important;
+}
+
+.map-container {
+    height: calc(100vh - 85px) !important;
+    border-radius: 7px !important;
+    position: relative !important;
+    border-radius: 10px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.map-error-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    text-align: center;
+    color: red;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+/* Zonas: columna derecha */
+
+.col-zonas-registro {
+    display: 'flex';
+    justify-content: 'flex-start';
+    align-items: 'flex-start';
+    min-width: 49.5%;
+    margin-right: 0px;
+    min-height: calc(100vh - 85px);
+    max-height: calc(100vh - 85px);
+    z-index: 100;
+}
+
+.select-zona-registros {
+    gap: 0px;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 800px) {
+    .row-zonas-registro {
+        flex-direction: column;
+    }
+
+    .col-zonas-registro {
+        margin-top: 10px;
+    }
+}
+
+/* Recharts */
+
+.table-zonas-registro {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 100%;
+    min-height: calc(100vh - 164px);
+    max-height: calc(100vh - 164px);
+    gap: 5px;
+    overflow-y: auto;
+    padding: 0.25rem;
+    padding-bottom: 0rem;
+    position: relative;
+}
+
+.table-zonas-registro::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background: linear-gradient(to top, white 50%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+}
+
+.container-pay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F8F9FA;
+    padding: 0.5rem;
+    min-width: 49.6%;
+    border-radius: 5px;
+    min-height: calc(46vh - 0px);
+    max-height: calc(46vh - 0px);
+
+}
+
+.modebar-btn--logo {
+    display: none;
+}
+
+.modebar-btn {
+    display: none;
+}
+
+.grafico {
+    position: relative;
+    padding-bottom: 50%;
+    width: 100%;
+}
+
+.boton-grafico {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.boton-grafico .icon-btn {
+    font-size: 1.25rem;
+    color: #394E6B
+}
+
+.boton-grafico .icon-btn:hover {
+    color: #59789E
+}
+
+.scroll-wrapper {
+    scrollbar-width: none;
+}
