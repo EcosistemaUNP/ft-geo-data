@@ -58,6 +58,7 @@ function agruparPorGenero(data: GeneroPorFecha[]): GeneroAgrupado[] {
 }
 
 interface GeneroBarChartProps {
+  selectedGeneros: string[];  // Géneros seleccionados
   fechaInicio?: string;
   fechaFin?: string;
 }
@@ -65,21 +66,22 @@ interface GeneroBarChartProps {
 class GeneroBarChart extends PureComponent<GeneroBarChartProps> {
   // Filtrar datos basado en las fechas seleccionadas
   getFilteredData() {
-    const { fechaInicio, fechaFin } = this.props;
+    const { fechaInicio, fechaFin, selectedGeneros } = this.props;
 
     const data = generarDatosGenero(fechaInicio ?? Date(), fechaFin ?? Date());
 
-    if (!fechaInicio && !fechaFin) {
-      return data;
-    }
+    // Filtrar solo los géneros seleccionados
+    const filteredData = data.map(item => {
+      const filteredItem: any = { fecha: item.fecha };
 
-    return data.filter(item => {
-      const itemDate = new Date(item.fecha);
-      const startDate = fechaInicio ? new Date(fechaInicio) : new Date(-8640000000000000);
-      const endDate = fechaFin ? new Date(fechaFin) : new Date(8640000000000000);
+      if (selectedGeneros.includes('masculino')) filteredItem.masculino = item.masculino;
+      if (selectedGeneros.includes('femenino')) filteredItem.femenino = item.femenino;
+      if (selectedGeneros.includes('no-binario')) filteredItem.noBinario = item.noBinario;
 
-      return itemDate >= startDate && itemDate <= endDate;
+      return filteredItem;
     });
+
+    return filteredData;
   }
 
   render() {
@@ -150,9 +152,29 @@ class GeneroBarChart extends PureComponent<GeneroBarChartProps> {
             <Legend />
             <Bar dataKey="cantidad" fill="#8884d8" name="Total">
               {agruparPorGenero(filteredData).map((entry: any, index: number) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <>
+                  {this.props.selectedGeneros.includes('masculino') && (
+                    <Cell key={`cell-${index}`} fill={COLORS[0]} name="Masculino" />
+                  )}
+                  {this.props.selectedGeneros.includes('femenino') && (
+                    <Cell key={`cell-${index}`} fill={COLORS[1]} name="Femenino" />
+                  )}
+                  {this.props.selectedGeneros.includes('no-binario') && (
+                    <Cell key={`cell-${index}`} fill={COLORS[2]} name="No Binario" />
+                  )}
+                  {/* <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} /> */}
+                </>
               ))}
             </Bar>
+            {/* {this.props.selectedGeneros.includes('masculino') && (
+            <Bar dataKey="cantidad" fill={COLORS[0]} name="Masculino" />
+          )}
+          {this.props.selectedGeneros.includes('femenino') && (
+            <Bar dataKey="cantidad" fill={COLORS[1]} name="Femenino" />
+          )}
+          {this.props.selectedGeneros.includes('no-binario') && (
+            <Bar dataKey="cantidad" fill={COLORS[2]} name="No Binario" />
+          )} */}
           </BarChart>
         </ResponsiveContainer>
         {/* )} */}

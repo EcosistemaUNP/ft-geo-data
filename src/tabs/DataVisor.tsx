@@ -19,6 +19,16 @@ const DataVisor: React.FC = () => {
     const [fechaInicio, setFechaInicio] = useState<string>('');
     const [fechaFin, setFechaFin] = useState<string>('');
 
+    // Filtro de genero
+    const [generoSeleccionado, setGeneroSeleccionado] = useState<string[]>([]);
+
+    // Este estado se puede actualizar cada vez que se selecciona un checkbox
+    const handleGeneroChange = (id: string) => {
+        setGeneroSeleccionado(prev =>
+            prev.includes(id) ? prev.filter(g => g !== id) : [...prev, id]
+        );
+    };
+
     const handleFechaChange = useCallback((inicio: string, fin: string) => {
         setFechaInicio(inicio);
         setFechaFin(fin);
@@ -68,7 +78,12 @@ const DataVisor: React.FC = () => {
         <FiltroSolicitud key="solicitud" forceRecalculate={isVisible} />,
         <FiltroFechas key="fechas" forceRecalculate={isVisible} onFechaChange={handleFechaChange} />,
         <FiltroUbicacion key="ubicacion" forceRecalculate={isVisible} />,
-        <FiltroGenero key="genero" forceRecalculate={isVisible} />,
+        <FiltroGenero
+            // key="genero"
+            forceRecalculate={isVisible}
+            selectedGeneros={generoSeleccionado}
+            onGeneroChange={handleGeneroChange}
+        />,
         <FiltroRangoEtario key="rango-etario" forceRecalculate={isVisible} />,
         <FiltroGrupoEtnico key="grupo-etnico" forceRecalculate={isVisible} />,
         <FiltroDiscapacidad key="discapacidad" forceRecalculate={isVisible} />
@@ -163,7 +178,11 @@ const DataVisor: React.FC = () => {
                         </div>
                         <div className="panel-row" style={{ marginBottom: '5px' }}>
                             <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '370px' }}>
-                                <GeneroBarChart fechaInicio={fechaInicio} fechaFin={fechaFin} />
+                                <GeneroBarChart 
+                                selectedGeneros={generoSeleccionado}
+                                fechaInicio={fechaInicio} 
+                                fechaFin={fechaFin} 
+                                />
                                 {/* <Example fechaInicio={fechaInicio} fechaFin={fechaFin} /> */}
                             </div>
                             <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '370px' }}>

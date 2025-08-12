@@ -7,7 +7,17 @@ interface CheckboxOption {
     checked: boolean;
 }
 
-const FiltroGenero: React.FC<{ forceRecalculate?: boolean }> = ({ forceRecalculate }) => {
+interface FiltroGeneroProps {
+    forceRecalculate?: boolean
+    selectedGeneros: string[];  // Géneros seleccionados pasados como prop
+    onGeneroChange: (id: string) => void;  // Función que maneja el cambio de género
+}
+
+const FiltroGenero: React.FC<FiltroGeneroProps> = ({ 
+    forceRecalculate,
+    selectedGeneros, 
+    onGeneroChange
+ }) => {
 
     const [options, setOptions] = useState<CheckboxOption[]>([
         { id: "femenino", label: "Femenino", checked: false },
@@ -19,6 +29,7 @@ const FiltroGenero: React.FC<{ forceRecalculate?: boolean }> = ({ forceRecalcula
         setOptions(options.map(option =>
             option.id === id ? { ...option, checked: !option.checked } : option
         ));
+        // onGeneroChange(id);
     };
 
     return (
