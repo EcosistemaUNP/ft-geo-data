@@ -4,10 +4,9 @@ import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recha
 const data = [
   { name: 'Individuales', value: Math.floor(Math.random() * (135 - 5 + 1)) + 5 },
   { name: 'Colectivas', value: Math.floor(Math.random() * (40 - 5 + 1)) + 5 },
-  { name: 'Otros', value: Math.floor(Math.random() * (30 - 5 + 1)) + 5 },
 ];
 
-const COLORS = ['#5ed4d0ff', '#e99c70ff', '#6aa3dcff'];
+const COLORS = ['#5ed4d0ff', '#e99c70ff'];
 
 interface TipoSolicitudPieChartProps {
   fechaInicio?: string;

@@ -25,7 +25,7 @@ const PanelTitulo: React.FC<PanelTituloProps> = memo(({ vistaActual, onVistaChan
               <MdMap /> Visor geográfico
             </option>
             <option value="informe">
-              <MdDescription /> Generación de informe
+              <MdDescription /> Informes
             </option>
             <option value="aeris">
               <MdDescription /> Aeris (IA)

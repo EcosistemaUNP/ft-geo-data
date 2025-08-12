@@ -9,6 +9,8 @@ import '../styles/visorStyles.css';
 import { TipoSolicitudPieChart } from "../components/recharts/visor/pie-charts/TipoSolicitudPieChart";
 import { GeneroBarChart } from "../components/recharts/visor/bar-charts/GeneroBarChart";
 
+import { useSolicitudesFiltradas } from "../hooks";
+
 const DataVisor: React.FC = () => {
 
     const [filtrosVisibles, setFiltrosVisibles] = useState(true);
@@ -18,6 +20,8 @@ const DataVisor: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [fechaInicio, setFechaInicio] = useState<string>('');
     const [fechaFin, setFechaFin] = useState<string>('');
+
+    const { data: datosFiltrados, loading, error } = useSolicitudesFiltradas(fechaInicio, fechaFin);
 
     // Filtro de genero
     const [generoSeleccionado, setGeneroSeleccionado] = useState<string[]>([]);
@@ -172,9 +176,12 @@ const DataVisor: React.FC = () => {
                                 <TipoSolicitudPieChart />
                                 {/* <PreubaStackedAreaChart /> */}
                             </div>
-                            <div className="panel-row-item" style={{ minWidth: '54%', minHeight: '400px' }}>
-                                <Example fechaInicio={fechaInicio} fechaFin={fechaFin} />
+                            <div className="panel-row-item" style={{ minWidth: "54%", minHeight: "400px" }}>
+                                {loading && <p>Cargando solicitudes…</p>}
+                                {error && <p style={{ color: "red" }}>Error: {error}</p>}
+                                {!loading && !error && <Example data={datosFiltrados} />}
                             </div>
+
                         </div>
                         <div className="panel-row" style={{ marginBottom: '5px' }}>
                             <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '370px' }}>
