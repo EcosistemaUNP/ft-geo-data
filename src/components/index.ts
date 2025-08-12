@@ -20,6 +20,7 @@ export * from './filtro-data/FiltroGenero';
 export * from './filtro-data/FiltroRangoEtario';
 export * from './filtro-data/FiltroGrupoEtnico';
 export * from './filtro-data/FiltroDiscapacidad';
+export * from './filtro-data/FiltroSolicitud';
 
 // visor-ui
 export * from './visor-ui/PanelTitulo';

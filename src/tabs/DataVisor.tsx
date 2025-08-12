@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo, memo, useCallback } from "
 import { FaPeopleLine, FaEye, FaBoxesPacking, FaFileLines, FaFileShield, FaUserShield, FaUsersViewfinder, FaBuildingShield, FaChartLine } from 'react-icons/fa6';
 import { TbForms } from "react-icons/tb";
 
-import { PreubaStackedAreaChart, Example, PanelTitulo, FiltroTitulo, FiltroDiscapacidad } from "../components";
+import { PreubaStackedAreaChart, Example, PanelTitulo, FiltroTitulo, FiltroDiscapacidad, FiltroSolicitud } from "../components";
 import { FiltroUbicacion, FiltroFechas, FiltroGenero, FiltroRangoEtario, FiltroGrupoEtnico } from "../components";
 
 import '../styles/visorStyles.css';
@@ -63,6 +63,7 @@ const DataVisor: React.FC = () => {
 
     // Filtros demográficos
     const filtrosDemograficos = useMemo(() => [
+        <FiltroSolicitud key="solicitud" forceRecalculate={isVisible} />,
         <FiltroFechas key="fechas" forceRecalculate={isVisible} onFechaChange={handleFechaChange} />,
         <FiltroUbicacion key="ubicacion" forceRecalculate={isVisible} />,
         <FiltroGenero key="genero" forceRecalculate={isVisible} />,
@@ -150,10 +151,10 @@ const DataVisor: React.FC = () => {
                             </div>
                         </div>
                         <div className="panel-row">
-                            <div className="panel-row-item" style={{ minWidth: '33%', minHeight: '400px' }}>
+                            <div className="panel-row-item" style={{ minWidth: '44%', minHeight: '400px' }}>
                                 <PreubaStackedAreaChart />
                             </div>
-                            <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '400px' }}>
+                            <div className="panel-row-item" style={{ minWidth: '54%', minHeight: '400px' }}>
                                 <Example fechaInicio={fechaInicio} fechaFin={fechaFin} />
                             </div>
                         </div>
@@ -184,7 +185,6 @@ const DataVisor: React.FC = () => {
                 {!filtrosVisibles && (
                     <div className="boton-mostrar-filtros" onClick={toggleFiltros}>
                         <FaEye className="icono-mostrar-filtros" />
-                        <span>Mostrar filtros</span>
                     </div>
                 )}
 
