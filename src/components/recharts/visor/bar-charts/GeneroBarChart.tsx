@@ -90,7 +90,7 @@ class GeneroBarChart extends PureComponent<GeneroBarChartProps> {
     return (
       <>
         {/* {!showTotal ? ( */}
-        <ResponsiveContainer width="100%" height="100%">
+        {/* <ResponsiveContainer width="100%" height="100%">
             <BarChart
               width={500}
               height={300}
@@ -129,9 +129,9 @@ class GeneroBarChart extends PureComponent<GeneroBarChartProps> {
                 name="No Binario"
               />
             </BarChart>
-          </ResponsiveContainer>
+          </ResponsiveContainer> */}
         {/* ) : ( */}
-        {/* <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             width={500}
             height={300}
@@ -148,11 +148,13 @@ class GeneroBarChart extends PureComponent<GeneroBarChartProps> {
             <YAxis />
             <Tooltip />
             <Legend />
-            {agruparPorGenero(filteredData).map((entry: any, index: number) => (
-              <Bar dataKey={`cantidad`} fill={COLORS[index % COLORS.length]} />
-            ))}
+            <Bar dataKey="cantidad" fill="#8884d8" name="Total">
+              {agruparPorGenero(filteredData).map((entry: any, index: number) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Bar>
           </BarChart>
-        </ResponsiveContainer> */}
+        </ResponsiveContainer>
         {/* )} */}
       </>
     );
