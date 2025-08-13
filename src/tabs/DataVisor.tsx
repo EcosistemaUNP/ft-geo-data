@@ -20,8 +20,9 @@ const DataVisor: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [fechaInicio, setFechaInicio] = useState<string>('');
     const [fechaFin, setFechaFin] = useState<string>('');
+    const [tipoSolicitudSeleccionada, setTipoSolicitudSeleccionada] = useState<'individual' | 'colectiva' | null>(null);
 
-    const { data: datosFiltrados, loading, error } = useSolicitudesFiltradas(fechaInicio, fechaFin);
+    const { data: datosFiltrados, resumenParcial } = useSolicitudesFiltradas(fechaInicio, fechaFin);
 
     // Filtro de genero
     const [generoSeleccionado, setGeneroSeleccionado] = useState<string[]>([]);
@@ -78,20 +79,36 @@ const DataVisor: React.FC = () => {
     }, []);
 
     // Filtros demográficos
-    const filtrosDemograficos = useMemo(() => [
-        <FiltroSolicitud key="solicitud" forceRecalculate={isVisible} />,
-        <FiltroFechas key="fechas" forceRecalculate={isVisible} onFechaChange={handleFechaChange} />,
-        <FiltroUbicacion key="ubicacion" forceRecalculate={isVisible} />,
-        <FiltroGenero
-            // key="genero"
-            forceRecalculate={isVisible}
-            selectedGeneros={generoSeleccionado}
-            onGeneroChange={handleGeneroChange}
-        />,
-        <FiltroRangoEtario key="rango-etario" forceRecalculate={isVisible} />,
-        <FiltroGrupoEtnico key="grupo-etnico" forceRecalculate={isVisible} />,
-        <FiltroDiscapacidad key="discapacidad" forceRecalculate={isVisible} />
-    ], [isVisible, handleFechaChange]);
+    const filtrosDemograficos = useMemo(
+        () => [
+            <FiltroSolicitud
+                key="solicitud"
+                forceRecalculate={isVisible}
+                onChange={setTipoSolicitudSeleccionada}
+            />,
+            <FiltroFechas
+                key="fechas"
+                forceRecalculate={isVisible}
+                onFechaChange={handleFechaChange}
+            />,
+            <FiltroUbicacion key="ubicacion" forceRecalculate={isVisible} />,
+            <FiltroGenero
+                forceRecalculate={isVisible}
+                selectedGeneros={generoSeleccionado}
+                onGeneroChange={handleGeneroChange}
+            />,
+            <FiltroRangoEtario key="rango-etario" forceRecalculate={isVisible} />,
+            <FiltroGrupoEtnico key="grupo-etnico" forceRecalculate={isVisible} />,
+            <FiltroDiscapacidad key="discapacidad" forceRecalculate={isVisible} />,
+        ],
+        [
+            isVisible,
+            handleFechaChange,
+            setTipoSolicitudSeleccionada,  // <---
+            generoSeleccionado,
+            handleGeneroChange
+        ]
+    );
 
     // Filtros operativos
     const filtrosOperativos = useMemo(() => [
@@ -172,23 +189,38 @@ const DataVisor: React.FC = () => {
                             </div>
                         </div>
                         <div className="panel-row">
-                            <div className="panel-row-item" style={{ minWidth: '33%', minHeight: '400px' }}>
-                                <TipoSolicitudPieChart />
-                                {/* <PreubaStackedAreaChart /> */}
-                            </div>
-                            <div className="panel-row-item" style={{ minWidth: "54%", minHeight: "400px" }}>
-                                {loading && <p>Cargando solicitudes…</p>}
-                                {error && <p style={{ color: "red" }}>Error: {error}</p>}
-                                {!loading && !error && <Example data={datosFiltrados} />}
+                            <div
+                                className="panel-row-item"
+                                style={{ minWidth: "33%", minHeight: "400px" }}
+                            >
+                                {resumenParcial && (
+                                    <TipoSolicitudPieChart
+                                        rawData={datosFiltrados}
+                                        fechaInicio={fechaInicio}
+                                        fechaFin={fechaFin}
+                                    />
+                                )}
                             </div>
 
+                            <div
+                                className="panel-row-item"
+                                style={{ minWidth: "54%", minHeight: "400px" }}
+                            >
+                                <Example
+                                    rawData={datosFiltrados}
+                                    solicitud={tipoSolicitudSeleccionada}
+                                    fechaInicio={fechaInicio}
+                                    fechaFin={fechaFin}
+                                />
+                            </div>
                         </div>
+
                         <div className="panel-row" style={{ marginBottom: '5px' }}>
                             <div className="panel-row-item" style={{ minWidth: '66%', minHeight: '370px' }}>
-                                <GeneroBarChart 
-                                selectedGeneros={generoSeleccionado}
-                                fechaInicio={fechaInicio} 
-                                fechaFin={fechaFin} 
+                                <GeneroBarChart
+                                    selectedGeneros={generoSeleccionado}
+                                    fechaInicio={fechaInicio}
+                                    fechaFin={fechaFin}
                                 />
                                 {/* <Example fechaInicio={fechaInicio} fechaFin={fechaFin} /> */}
                             </div>
